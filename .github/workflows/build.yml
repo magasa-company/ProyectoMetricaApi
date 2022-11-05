@@ -1,0 +1,38 @@
+name: SonarCloud analysis
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main  
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      # Instalar dependencias
+      - name: Install npm dependencies
+        # No ejecutar si se obtuvo node_modules de cache
+        if: steps.node-cache.outputs.cache-hit != 'true' 
+        run: npm install
+      # Ejecutar pruebas unitarias
+      - name: Run tests and linter
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.17.0
+      - run: npm run test
+      # Ejecutar SonarCloud Scan
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
