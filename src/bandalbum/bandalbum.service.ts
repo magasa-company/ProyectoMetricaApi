@@ -83,8 +83,8 @@ export class BandAlbumService {
         if (!album)
             throw new BusinessLogicException("The album with the given id was not found", BusinessError.NOT_FOUND)
 
-        band.albums = band.albums.filter(e => {
-            e.id !== albumId
+        band.albums = band.albums.filter(element => {
+            element.id !== albumId;
         });
 
         return await this.bandRepository.save(band);
