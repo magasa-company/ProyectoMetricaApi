@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MusicianDTO } from './musician.dto';
 import { BusinessLogicException, BusinessError } from '../shared/errors/business-errors';
-import * as Joi from 'joi';
+import Joi = require('joi');
 import { validate } from "../shared/validation";
 
 @Injectable()
