@@ -63,8 +63,8 @@ export class BandMusicianService {
         if (!musician)
             throw new BusinessLogicException("The musician with the given id was not found", BusinessError.NOT_FOUND)
 
-        band.musicians = band.musicians.filter(e => {
-            e.id !== musicianId
+        band.musicians = band.musicians.filter(element => {
+            element.id !== musicianId;
         });
 
         return await this.bandRepository.save(band);
