@@ -55,8 +55,8 @@ export class AlbumBandService {
 
         let bands: Band[] = [];
 
-        for (let i = 0; i < bandDTO.length; i++) {
-            const band = await this.bandRepository.findOne(bandDTO[i].id);
+        for (const element of bandDTO) {
+            const band = await this.bandRepository.findOne(element.id);
             if (!band)
                 throw new BusinessLogicException("The band with the given id was not found", BusinessError.NOT_FOUND)
             else 
