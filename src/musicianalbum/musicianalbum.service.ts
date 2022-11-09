@@ -54,8 +54,9 @@ export class MusicianAlbumService {
 
         let albums: Album[] = [];
 
-        for (let i = 0; i < albumDTO.length; i++) {
-            const album = await this.albumRepository.findOne(albumDTO[i].id);
+        //for (let i = 0; i < albumDTO.length; i++) {
+        for (let value of albumDTO) {
+            const album = await this.albumRepository.findOne(value.albumDTO.id);
             if (!album)
                 throw new BusinessLogicException("The album with the given id was not found", BusinessError.NOT_FOUND)
             albums.push(album);
@@ -69,7 +70,6 @@ export class MusicianAlbumService {
         const musician = await this.musicianRepository.findOne(musicianId, { relations: ["albums"] });
         if (!musician)
             throw new BusinessLogicException("The musician with the given id was not found", BusinessError.NOT_FOUND)
-
         return musician.albums;
     }
 
