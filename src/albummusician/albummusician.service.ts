@@ -55,8 +55,8 @@ export class AlbumMusicianService {
 
         let musicians: Musician[] = [];
 
-        for (let i = 0; i < musicianDTO.length; i++) {
-            const musician = await this.musicianRepository.findOne(musicianDTO[i].id);
+        for (const element of musicianDTO) {
+            const musician = await this.musicianRepository.findOne(element.id);
             if (!musician)
                 throw new BusinessLogicException("The musician with the given id was not found", BusinessError.NOT_FOUND)
             else
