@@ -1,13 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { Prize } from './prize.entity';
 import { PrizeDTO } from './prize.dto';
-
 import { BusinessLogicException, BusinessError } from "../shared/errors/business-errors";
-
-import * as Joi from "joi";
+import Joi = require('joi');
 import { validate } from "../shared/validation";
 
 @Injectable()
@@ -21,10 +18,9 @@ export class PrizeService {
     }
 
     async findOne(id: number): Promise<PrizeDTO> {
-        const prize = await this.prizeRepository.findOne(id, { relations: ["performerPrizes"] });
+        const prize = await this.prizeRepository.findOne({ relations: ["performerPrizes"] });
         if (!prize)
             throw new BusinessLogicException("The prize with the given id was not found", BusinessError.NOT_FOUND)
-
         return prize;
     }
 
@@ -37,13 +33,12 @@ export class PrizeService {
             newPrize.name = prizeDTO.name;
             newPrize.description = prizeDTO.description
             newPrize.organization = prizeDTO.organization;
-
             return await this.prizeRepository.save(newPrize)
         }
     }
 
     async update(id: number, prizeDTO: PrizeDTO): Promise<PrizeDTO> {
-        const prize = await this.prizeRepository.findOne(id);
+        const prize = await this.prizeRepository.findOne({ relations: ["performerPrizes"] });
         if (!prize)
             throw new BusinessLogicException("The prize with the given id was not found", BusinessError.NOT_FOUND)
 
@@ -54,17 +49,15 @@ export class PrizeService {
             prize.name = prizeDTO.name;
             prize.description = prizeDTO.description;
             prize.organization = prizeDTO.organization;
-
             return await this.prizeRepository.save(prize);
         }
     }
 
     async delete(id: number) {
-        const prize = await this.prizeRepository.findOne(id);
+        const prize = await this.prizeRepository.findOne({ relations: ["performerPrizes"] });
 
         if (!prize)
             throw new BusinessLogicException("The prize with the given id was not found", BusinessError.NOT_FOUND)
-
         return await this.prizeRepository.remove(prize);
     }
 
