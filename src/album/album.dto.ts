@@ -9,5 +9,4 @@ export class AlbumDTO {
     readonly description: string;
     readonly genre: GENRE;
     readonly recordLabel: RECORD_LABEL;
-    albumDTO: any;
 }
