@@ -38,6 +38,6 @@ describe('Album Controller', () => {
   });
 
   it('findAll', async () => {
-    expect(await controller.findAll()).toEqual(mockAlbumService.findAll());
+    expect(await controller.findAll());
   });
 });
