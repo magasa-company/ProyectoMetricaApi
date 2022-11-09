@@ -123,7 +123,8 @@ export class DataSetup1611260351811 implements MigrationInterface {
         await queryRunner.query(this.migration);
     }
 
-    public async down(queryRunner: QueryRunner): Promise<any> {
+        public async down(queryRunner: QueryRunner): Promise<any> {
+            // This funtion no used
     }
 
 }
